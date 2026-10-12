@@ -5,6 +5,11 @@ variable "ami" {
   default = "ami-0b6d9d3d33ba97d99"
 }
 
+variable "region" {
+  description = "This is the eu-west-2 region"
+  type = string
+  default = "eu-west-2"
+}
 variable "Server_type" {
   description = "This is the Type of Server"
   type = string
