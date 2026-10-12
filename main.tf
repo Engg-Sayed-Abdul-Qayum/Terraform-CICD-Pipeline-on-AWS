@@ -11,10 +11,18 @@ module "Web-Server-2" {
   Server_Name = "Server-2"
 }
 
-module "Web-Server-3" {
+ module "Web-Server-4" {
   source = "./modules/EC2"
   Server_type = "t3.micro"
-  Server_Name = "Server-3"
+  Server_Name = "Server-01"
 }
 
+
+ module "Web-Server-5" {
+  source = "./modules/EC2"
+  Server_type = "t3.micro"
+  Server_Name = "Server-11"
+}
+
+ 
  

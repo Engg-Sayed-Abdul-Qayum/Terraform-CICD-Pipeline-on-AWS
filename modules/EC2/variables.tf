@@ -43,11 +43,11 @@ variable "User-Data" {
                 sudo systemctl start nginx
                 cd /var/www/html
                 sudo rm -rf index.nginx-debian.html
-                sudo git clone https://github.com/Engg-Sayed-Abdul-Qayum/Terraform-CICD-Pipeline-on-AWS.git
-                sudo cd Terraform-CICD-Pipeline-on-AWS
-                sudo mv index.html ./..
-                sudo mv style.css ./..
-                sudo mv index.html index.nginx-debian.html
+                git clone https://github.com/Engg-Sayed-Abdul-Qayum/Terraform-CICD-Pipeline-on-AWS.git
+                cd Terraform-CICD-Pipeline-on-AWS
+                mv index.html ./..
+                mv style.css ./..
+                mv index.html index.nginx-debian.html
                 EOF 
 }
 
