@@ -22,17 +22,17 @@ variable "Key-pair" {
   type = string
   default = "Class-work"
 }
-variable "index.html" {
-  description = "This is a index.html data"
-  type = string
-  default = "index.html"
-}
+# variable "index.html" {
+#   description = "This is a index.html data"
+#   type = string
+#   default = "index.html"
+# }
 
-variable "style,css" {
-  description = "This is a style.css"
-  type = string
-  default = "style.css"
-}
+# variable "style,css" {
+#   description = "This is a style.css"
+#   type = string
+#   default = "style.css"
+# }
 variable "User-Data" {
   description = "This is the Nginx Setup User-Date"
   type = string
