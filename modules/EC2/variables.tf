@@ -17,6 +17,22 @@ variable "Server_Name" {
   default = "Web-Server"
 }
 
+variable "Key-pair" {
+  description = "value"
+  type = string
+  default = "Class-work"
+}
+variable "index.html" {
+  description = "This is a index.html data"
+  type = string
+  default = "index.html"
+}
+
+variable "style,css" {
+  description = "This is a style.css"
+  type = string
+  default = "style.css"
+}
 variable "User-Data" {
   description = "This is the Nginx Setup User-Date"
   type = string
@@ -25,16 +41,19 @@ variable "User-Data" {
                 sudo apt update 
                 sudo apt install nginx -y
                 sudo systemctl start nginx
-                cd /usr/share/nginx/html
-                rm -rf index.html
-                cd ~
-                cp ./index.html /usr/share/nginx/html
-                cp ./style.css /usr/share/nginx/html
+                  cat > /var/www/html/index.html <<'HTML'
+                  ${file("${path.root}/index.html")}
+                  HTML
+
+                  cat > /var/www/html/style.css <<'CSS'
+                  ${file("${path.root}/style.css")}
+                  CSS
+
+                # cd /usr/share/nginx/html
+                # rm -rf index.html
+                # cd ~
+                # cp ./index.html /usr/share/nginx/html
+                # cp ./style.css /usr/share/nginx/html
                 EOF 
 }
 
-variable "Key-pair" {
-  description = "value"
-  type = string
-  default = "Class-work"
-}
