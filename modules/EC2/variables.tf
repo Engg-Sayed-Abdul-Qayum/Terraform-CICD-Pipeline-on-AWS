@@ -44,9 +44,10 @@ variable "User-Data" {
                   
                 cd /usr/share/nginx/html
                 rm -rf index.html
-                cd ~
-                cp ./index.html /usr/share/nginx/html
-                cp ./style.css /usr/share/nginx/html
+                git clone https://github.com/Engg-Sayed-Abdul-Qayum/Terraform-CICD-Pipeline-on-AWS.git
+                cd Terraform-CICD-Pipeline-on-AWS
+                sudo cp ./index.html /usr/share/nginx/html
+                sudo cp ./style.css /usr/share/nginx/html
                 EOF 
 }
 
