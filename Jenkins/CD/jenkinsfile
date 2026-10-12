@@ -1,0 +1,99 @@
+// CI pipeline : plan, then apply only after manual approval
+pipeline {
+    agent any
+
+
+    options {
+        timestamps()
+        disableConcurrentBuilds()   // avoids two runs fighting over the state lock
+    }
+
+    environment {
+        AWS_DEFAULT_REGION = 'us-east-1'   // change to your region
+        TF_IN_AUTOMATION   = 'true'
+        TF_INPUT           = 'false'
+    }
+
+    stages {
+        stage('Clone repo') {
+            steps {
+                sh '''
+                    if git -C Terraform-CICD-Pipeline-on-AWS rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+                        git -C Terraform-CICD-Pipeline-on-AWS pull --ff-only
+                    elif [ -e Terraform-CICD-Pipeline-on-AWS ]; then
+                        echo "Error: Terraform-CICD-Pipeline-on-AWS exists but is not a Git repository"
+                        exit 1
+                    else
+                        git clone https://github.com/Engg-Sayed-Abdul-Qayum/Terraform-CICD-Pipeline-on-AWS.git
+                    fi
+                '''
+            }
+        }
+
+        stage('Format check') {
+            steps {
+                // fails the build if any file is not formatted
+                dir('Terraform-CICD-Pipeline-on-AWS') {
+                    sh 'terraform fmt'
+                }
+            }
+        }
+
+        stage('Init') {
+            environment {
+                AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
+                AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+            }
+            steps {
+                dir('Terraform-CICD-Pipeline-on-AWS') {
+                    sh 'terraform init'
+                }
+            }
+        }
+
+        stage('Validate') {
+            steps {
+                dir('Terraform-CICD-Pipeline-on-AWS') {
+                    sh 'terraform validate'
+                }
+            }
+        }
+
+        stage('Plan') {
+            environment {
+                AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
+                AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+            }
+            steps {
+                dir('Terraform-CICD-Pipeline-on-AWS') {
+                    sh 'terraform plan -out=tfplan'
+                    sh 'terraform show -no-color tfplan > plan.txt'
+                }
+            }
+        }
+        stage('Apply') {
+            input {
+                message 'Approve applying the Terraform plan?'
+                ok 'Apply'
+            }
+            environment {
+                AWS_ACCESS_KEY_ID     = credentials('aws-access-key-id')
+                AWS_SECRET_ACCESS_KEY = credentials('aws-secret-access-key')
+            }
+            steps {
+                dir('Terraform-CICD-Pipeline-on-AWS') {
+                    sh 'terraform apply tfplan'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            archiveArtifacts artifacts: 'Terraform-CICD-Pipeline-on-AWS/plan.txt', fingerprint: true
+        }
+        cleanup {
+            cleanWs()
+        }
+    }
+}
