@@ -32,3 +32,9 @@ variable "User-Data" {
                 cp ./style.css /usr/share/nginx/html
                 EOF 
 }
+
+variable "Key-pair" {
+  description = "value"
+  type = string
+  default = "Class-work"
+}
