@@ -41,13 +41,13 @@ variable "User-Data" {
                 sudo apt update 
                 sudo apt install nginx -y
                 sudo systemctl start nginx
-                  
-                cd /usr/share/nginx/html
-                rm -rf index.html
+                cd /var/www/html
+                rm -rf index.nginx-debian.html
                 git clone https://github.com/Engg-Sayed-Abdul-Qayum/Terraform-CICD-Pipeline-on-AWS.git
                 cd Terraform-CICD-Pipeline-on-AWS
-                sudo cp ./index.html /usr/share/nginx/html
-                sudo cp ./style.css /usr/share/nginx/html
+                mv index.html ./..
+                mv style.css ./..
+                mv index.thml index.nginx-debian.html
                 EOF 
 }
 
