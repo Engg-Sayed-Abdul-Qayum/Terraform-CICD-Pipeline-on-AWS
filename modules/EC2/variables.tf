@@ -16,3 +16,19 @@ variable "Server_Name" {
   type = string
   default = "Web-Server"
 }
+
+variable "User-Data" {
+  description = "This is the Nginx Setup User-Date"
+  type = string
+  default =<<-EOF
+                #!/bin/bash
+                sudo apt update 
+                sudo apt install nginx -y
+                sudo systemctl start nginx
+                cd /usr/share/nginx/html
+                rm -rf index.html
+                cd ~
+                cp ./index.html /usr/share/nginx/html
+                cp ./style.css /usr/share/nginx/html
+                EOF 
+}
