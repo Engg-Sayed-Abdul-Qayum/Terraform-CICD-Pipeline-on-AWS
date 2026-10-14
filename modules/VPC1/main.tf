@@ -60,7 +60,7 @@ resource "aws_route_table" "US-RT" {
 
 
 resource "aws_route_table_association" "US-RT-Access" {
-  route_table_id = var.US-RT-Name.id
+  route_table_id = var.US-RT-Name
   subnet_id = aws_subnet.US-Subnet.id
 }
 
@@ -72,7 +72,7 @@ resource "aws_route_table_association" "US-RT-Access" {
 
 
 resource "aws_internet_gateway" "US-igw" {
-  vpc_id = aws_vpc.US-vpc
+  vpc_id = aws_vpc.US-vpc.id
   tags = {
     Name = var.US-IGW
   }
@@ -91,7 +91,7 @@ resource "aws_internet_gateway" "US-igw" {
 
 
 resource "aws_security_group" "US-SG" {
-  vpc_id = aws_vpc.US-vpc
+  vpc_id = aws_vpc.US-vpc.id
   ingress {
     from_port   = 80
     to_port     = 80

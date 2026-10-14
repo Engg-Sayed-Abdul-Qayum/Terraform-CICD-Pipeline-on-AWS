@@ -5,3 +5,8 @@ output "EU-SG" {
 output "EU-vpc" {
   value = aws_subnet.EU-Subnet.id
 }
+
+
+output "EU-vpc" {
+  value = aws_subnet.EU-Subnet.id
+}

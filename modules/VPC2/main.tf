@@ -23,17 +23,17 @@ resource "aws_subnet" "EU-Subnet" {
 
 resource "aws_route_table" "EU-RT" {
   vpc_id = aws_vpc.EU-vpc.id
-  route = {
+  route = [{
     cidr_block = var.EU-RT-Cidr
     gateway_id = aws_internet_gateway.EU-igw.id
-  }
+  }]
   tags = {
     Name = var.EU-RT-Name
   }
 }
 
 resource "aws_route_table_association" "EU-RT-Access" {
-  route_table_id = var.EU-RT-Name.id
+  route_table_id = var.EU-RT-Name
   subnet_id = aws_subnet.EU-Subnet.id
 }
 
