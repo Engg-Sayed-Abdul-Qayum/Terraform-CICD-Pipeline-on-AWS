@@ -37,28 +37,31 @@ resource "aws_subnet" "EU-Subnet" {
 
  
 resource "aws_route_table" "US-RT" {
-  vpc_id = aws_vpc.US-vpc.id
-  route = [{
+  vpc_id = var.VPC-US
+
+  route {
     cidr_block = var.US-RT-Cidr
     gateway_id = aws_internet_gateway.US-igw.id
-  }]
+  }
+
   tags = {
-    Name = var.US-RT-Name
+    Name = "US-Route-Table"
   }
 }
 
 
 resource "aws_route_table" "EU-RT" {
-  vpc_id = aws_vpc.EU-vpc.id
-  route = [{
+  vpc_id = var.VPC-EU
+
+  route {
     cidr_block = var.EU-RT-Cidr
     gateway_id = aws_internet_gateway.EU-igw.id
-  }]
+  }
+
   tags = {
-    Name = var.EU-RT-Name
+    Name = "EU-Route-Table"
   }
 }
-
 
 resource "aws_route_table_association" "US-RT-Access" {
   route_table_id = var.US-RT-Name
