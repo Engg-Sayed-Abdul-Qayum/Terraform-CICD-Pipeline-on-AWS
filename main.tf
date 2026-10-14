@@ -26,12 +26,12 @@
 #   EU-SG = "aws_security_group.EU-SG.id"
 # } 
 
-# module "US-VPC" {
-#   source = "./modules/VPC"
+module "US-VPC" {
+  source = "./modules/VPC"
 
-# }
+}
 
-# module "EU-VPC" {
-#   source = "./modules/VPC"
+module "EU-VPC" {
+  source = "./modules/VPC"
   
-# }
+}

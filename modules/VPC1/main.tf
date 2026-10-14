@@ -6,13 +6,13 @@ resource "aws_vpc" "US-vpc" {
   }
 }
 
-resource "aws_vpc" "EU-vpc" {
-  cidr_block = var.EU-CICR
-  region = var.EU-Region
-  tags = {
-    Name = var.VPC-EU
-  }
-}
+# resource "aws_vpc" "EU-vpc" {
+#   cidr_block = var.EU-CICR
+#   region = var.EU-Region
+#   tags = {
+#     Name = var.VPC-EU
+#   }
+# }
 
 
 resource "aws_subnet" "US-Subnet" {
@@ -25,14 +25,14 @@ resource "aws_subnet" "US-Subnet" {
 }
 
 
-resource "aws_subnet" "EU-Subnet" {
-  cidr_block = var.EU-SN-Cidr
-  vpc_id = var.EU-SN-Cidr
-  availability_zone = var.EU-AZ
-  tags = {
-    Name = var.EU-Subnet
-  }
-}
+# resource "aws_subnet" "EU-Subnet" {
+#   cidr_block = var.EU-SN-Cidr
+#   vpc_id = var.EU-SN-Cidr
+#   availability_zone = var.EU-AZ
+#   tags = {
+#     Name = var.EU-Subnet
+#   }
+# }
 
  
 resource "aws_route_table" "US-RT" {
@@ -47,16 +47,16 @@ resource "aws_route_table" "US-RT" {
 }
 
 
-resource "aws_route_table" "EU-RT" {
-  vpc_id = aws_vpc.EU-vpc.id
-  route = {
-    cidr_block = var.EU-RT-Cidr
-    gateway_id = aws_internet_gateway.EU-igw.id
-  }
-  tags = {
-    Name = var.EU-RT-Name
-  }
-}
+# resource "aws_route_table" "EU-RT" {
+#   vpc_id = aws_vpc.EU-vpc.id
+#   route = {
+#     cidr_block = var.EU-RT-Cidr
+#     gateway_id = aws_internet_gateway.EU-igw.id
+#   }
+#   tags = {
+#     Name = var.EU-RT-Name
+#   }
+# }
 
 
 resource "aws_route_table_association" "US-RT-Access" {
@@ -64,10 +64,10 @@ resource "aws_route_table_association" "US-RT-Access" {
   subnet_id = aws_subnet.US-Subnet.id
 }
 
-resource "aws_route_table_association" "EU-RT-Access" {
-  route_table_id = var.EU-RT-Name.id
-  subnet_id = aws_subnet.EU-Subnet.id
-}
+# resource "aws_route_table_association" "EU-RT-Access" {
+#   route_table_id = var.EU-RT-Name.id
+#   subnet_id = aws_subnet.EU-Subnet.id
+# }
 
 
 
@@ -80,12 +80,12 @@ resource "aws_internet_gateway" "US-igw" {
 
 
 
-resource "aws_internet_gateway" "EU-igw" {
-  vpc_id = aws_vpc.EU-vpc.id
-  tags = {
-    Name = var.EU-IGW
-  }
-}
+# resource "aws_internet_gateway" "EU-igw" {
+#   vpc_id = aws_vpc.EU-vpc.id
+#   tags = {
+#     Name = var.EU-IGW
+#   }
+# }
 
 
 
@@ -110,24 +110,24 @@ resource "aws_security_group" "US-SG" {
 }
 
 
-resource "aws_security_group" "EU-SG" {
-  vpc_id = aws_vpc.EU-vpc.id
-  ingress {
-    from_port   = 80
-    to_port     = 80
-    protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  egress {
-    from_port   = 0
-    to_port     = 0
-    protocol    = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-  tags = {
-    Name = "EU-SG"
-  }
-}
+# resource "aws_security_group" "EU-SG" {
+#   vpc_id = aws_vpc.EU-vpc.id
+#   ingress {
+#     from_port   = 80
+#     to_port     = 80
+#     protocol    = "tcp"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+#   tags = {
+#     Name = "EU-SG"
+#   }
+# }
 
 
 
@@ -151,20 +151,20 @@ resource "aws_security_group" "EU-SG" {
 
 ####----------------------subnet
 
-resource "aws_subnet" "US-Subnet" {
-  cidr_block = var.US-SN-Cidr
-  vpc_id = aws_vpc.US-vpc.id
-  tags = {
-    Name = var.US-Subnet
-  }
-}
+# resource "aws_subnet" "US-Subnet" {
+#   cidr_block = var.US-SN-Cidr
+#   vpc_id = aws_vpc.US-vpc.id
+#   tags = {
+#     Name = var.US-Subnet
+#   }
+# }
 
 
-resource "aws_subnet" "EU-Subnet" {
-  cidr_block = var.EU-SN-Cidr
-  vpc_id = aws_vpc.EU-vpc.id
-  tags = {
-    Name = var.EU-Subnet
-  }
-}
+# resource "aws_subnet" "EU-Subnet" {
+#   cidr_block = var.EU-SN-Cidr
+#   vpc_id = aws_vpc.EU-vpc.id
+#   tags = {
+#     Name = var.EU-Subnet
+#   }
+# }
 
