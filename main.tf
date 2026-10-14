@@ -27,11 +27,11 @@
 # } 
 
 module "US-VPC" {
-  source = "./modules/VPC"
+  source = "./modules/VPC1"
 
 }
 
 module "EU-VPC" {
-  source = "./modules/VPC"
+  source = "./modules/VPC2"
   
 }
