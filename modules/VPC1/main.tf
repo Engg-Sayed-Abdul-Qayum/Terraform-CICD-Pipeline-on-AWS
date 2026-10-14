@@ -17,7 +17,7 @@ resource "aws_vpc" "US-vpc" {
 
 resource "aws_subnet" "US-Subnet" {
   cidr_block = var.US-SN-Cidr
-  vpc_id = var.VPC-US.id
+  vpc_id = var.VPC-US
   availability_zone = var.US-AZ
   tags = {
     Name = var.US-Subnet
@@ -36,11 +36,11 @@ resource "aws_subnet" "US-Subnet" {
 
  
 resource "aws_route_table" "US-RT" {
-  vpc_id = aws_vpc.US-vpc.id
-  route = {
+  vpc_id = aws_vpc.US-vpc
+  route = [{
     cidr_block = var.US-RT-Cidr
     gateway_id = aws_internet_gateway.US-igw.id
-  }
+  }]
   tags = {
     Name = var.US-RT-Name
   }
@@ -72,7 +72,7 @@ resource "aws_route_table_association" "US-RT-Access" {
 
 
 resource "aws_internet_gateway" "US-igw" {
-  vpc_id = aws_vpc.US-vpc.id
+  vpc_id = aws_vpc.US-vpc
   tags = {
     Name = var.US-IGW
   }
@@ -91,7 +91,7 @@ resource "aws_internet_gateway" "US-igw" {
 
 
 resource "aws_security_group" "US-SG" {
-  vpc_id = aws_vpc.US-vpc.id
+  vpc_id = aws_vpc.US-vpc
   ingress {
     from_port   = 80
     to_port     = 80
