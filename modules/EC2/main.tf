@@ -5,7 +5,8 @@ resource "aws_instance" "Web-Server" {
   user_data = var.User-Data
   key_name = var.Key-pair
   associate_public_ip_address = true
-  vpc_security_group_ids = [var.US-SG]
+  subnet_id = var.US-Subnet-ID
+  
     tags = {
     Name = var.Server_Name
   }

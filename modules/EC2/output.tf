@@ -7,10 +7,10 @@ output "Server-Public-IP" {
 
 ### -----------------------------------------
 
-output "US-vpc" {
-  value = aws_vpc.US-vpc.id
-}
+# output "US-vpc" {
+#   value = aws_vpc.US-vpc.id
+# }
 
-output "EU-vpc" {
-  value = aws_vpc.EU-vpc.id
-}
+# output "EU-vpc" {
+#   value = aws_vpc.EU-vpc.id
+# }
